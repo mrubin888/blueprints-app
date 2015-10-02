@@ -1,0 +1,21 @@
+#floorplan_selector {
+	margin-right: 40px;
+}
+
+#view_button {
+	margin-left: 40px;
+}
+
+.loaded_image {
+	margin: 20px;
+	padding: 20x;
+	border: 2px solid black;
+}
+
+.success_text {
+	color: green
+}
+
+.error_text {
+	color: red
+}

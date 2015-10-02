@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author"      content="Matthew Rubin">
+		
+		<title>Blueprint App</title>
+		
+		<!-- Scripts -->
+		<script src="js/file-input.js"></script>
+		<script src="js/web-api-utils.js"></script>
+				
+		<!-- Styles -->
+		<link rel="stylesheet" href="css/style.css"></link>
+	</head>
+	
+	<body>
+		<h1>Blueprint App</h1>
+		<hr/>
+		<h2>Start by naming your floorplan</h2>
+		<input type="text" id="floorplan_name"/>
+		<h2>Then, simply upload some files...</h2>
+		<input type="file" multiple name="files" id="file_input" onchange="handleFiles(this.files)">
+		<h2>And submit.</h2>
+		<input type="submit" id="floorplan_create_button" onclick="fileListSubmit()"/>
+		<h3 id="upload_status"></h3>
+		<hr/>
+		<h2>You can view your already created floorplans here.</h2>
+		<select id="floorplan_selector"></select>
+		Size :
+		<input type="radio" name="image_size" value="original">Original
+		<input type="radio" name="image_size" checked="true" value="thumbnail">Thumbnail
+		<input type="radio" name="image_size" value="large">Large
+		<input type="submit" id="view_button" value="Let's take a look!" onclick="viewFloorplanSubmit()"/>
+		<h3 id="view_status"></h3>
+		<hr/>
+		<h3 id="floorplan_title"></h3>
+		<div id="image_container"></div>
+	</body>
+</html>
