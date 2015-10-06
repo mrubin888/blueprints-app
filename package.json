@@ -4,7 +4,7 @@
   "description": "A simple app for uploading blueprints and storing them off.",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec ./test/ --recursive"
+    "test": "./node_modules/.bin/mocha -R spec ./test/ --recursive --timeout 5000"
   },
   "author": "Matthew Rubin (mrubin888@gmail.com)",
   "license": "ISC",

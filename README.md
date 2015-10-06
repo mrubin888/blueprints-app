@@ -3,6 +3,7 @@ An app for loading files and generating floorplans.
 
 ## Installation
 Run 'npm install' from the root directory
+Replace the sample_awsconfig.json with your own awsconfig.json
 
 ## Start app
 Run 'npm start' from the root directory
