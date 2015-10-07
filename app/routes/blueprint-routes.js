@@ -38,21 +38,40 @@ module.exports	= function(app) {
 		}
 		
 		var title = req.body.title;
+		if (!title) {
+			return res.send(500, "No title provide");
+		}
 		title = title.replace(/\s/g, '-');
 		var sanitized_title = sanitize(title);
 		
-		floorplan_store.createFloorplan(sanitized_title, function (err, result) {
-			if (err) { return res.send(500, "Failed to create floorplan with error: " + err); }
-			if (!result) { return res.send(500, "Floorplan already exists.") }
-			
-			var new_floorplan_id = result.floorplan_id;
+		imageUtils.splitPDFsIntoJPGs("./static/uploads/", files, function (err, result) {
+			if (err) { return res.send(500, "failed to split pdfs with error " + err); }
+			files = result;
 		
-			async.each(files,
+			floorplan_store.createFloorplan(sanitized_title, function (err, result) {
+				if (err) { return res.send(500, "Failed to create floorplan with error: " + err); }
+				if (!result) { return res.send(500, "Floorplan already exists.") }
+				
+				var new_floorplan_id = result.floorplan_id;
 			
-				function(file, callback) {
-					blueprint_store.createBlueprint( new_floorplan_id, file.name, function (err, result) {
-						if (err) { return callback("Failed to create blueprint in postgres with error: " + err); }
-						
+				async.each(files,
+				
+					function(file, callback) {
+						blueprint_store.createBlueprint( new_floorplan_id, file.name, function (err, result) {
+							if (err) { return callback("Failed to create blueprint in postgres with error: " + err); }
+							return callback();
+						});
+					},
+					
+					function(err, result) {
+						return res.send(200);
+					}
+					
+				);
+			
+				async.forEachSeries(files,
+				
+					function(file, callback) {							
 						var small_file_name = 'thumbnail_' + file.name;
 						var large_file_name = 'large_' + file.name;
 						
@@ -64,15 +83,14 @@ module.exports	= function(app) {
 								return callback();
 							});
 						});
-					});
-				},
-				
-				function(err, result) {
-					if (err) { return res.send(500, err); }
-					else { return res.send(200, "Successful async calls"); }
-				}
-				
-			);
-		});
+					},
+					
+					function(err, result) {
+						if (err) { console.log(err); }
+					}
+					
+				);
+			});
+		})
 	});
 }

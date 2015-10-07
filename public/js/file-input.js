@@ -93,6 +93,7 @@ var generateImageView		= function (floorplan_name, blueprints) {
 		var newImage = document.createElement("img");
 		newImage.src = blueprint.bucket_path + floorplan_name + "/" + blueprint.prefixed_filename;
 		newImage.className = "loaded_image";
+		newImage.onerror = function () { console.log ("placeholder image"); this.src = '/res/loading.png'; }
 		container.appendChild(newImage);
 	}
 };

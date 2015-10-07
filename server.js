@@ -23,6 +23,6 @@ require('./app/routes/blueprint-routes.js')(app);
 require('./app/routes/floorplan-routes.js')(app);
 
 // listen
-var portNo = process.env.PORT || 8081;
+var portNo = process.env.PORT || 80;
 app.listen(portNo);
 console.log("App listening on port " + portNo);
